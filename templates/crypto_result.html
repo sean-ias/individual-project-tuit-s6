@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Cryptography App Results
+{% endblock %}
+
+{% block main %}
+    <script>
+        function copyToClipboard() {
+            var copyText = document.getElementById("encrypted-decrypted-message");
+            copyText.select();
+            document.execCommand("copy");
+            alert("Message copied to clipboard!");
+        }
+    </script>
+    <h1>Cryptography App Results</h1>
+    <p>Encrypted/Decrypted message:</p>
+    <textarea id="encrypted-decrypted-message" rows="4" cols="50">{{ message }}</textarea>
+    <br>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+    <a href="/encrypt">Back to Encryption Page</a>
+{% endblock %}

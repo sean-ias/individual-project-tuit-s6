@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Cryptography App
+{% endblock %}
+
+{% block main %}
+    <h1>Cryptography App</h1>
+
+    <form action="/encrypt" method="post">
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50"></textarea><br>
+
+        <label for="key">Key:</label><br>
+        <input type="text" id="key" name="key"><br>
+
+        <label for="method">Method:</label><br>
+        <select id="method" name="method">
+            <option value="caesar">Caesar Cipher</option>
+            <option value="vigenere">Vigenere Cipher</option>
+        </select><br>
+
+        
+        <select id="todo" name="todo">
+            <option value="Encrypt">Encrypt</option>
+            <option value="Decrypt">Decrypt</option>
+        </select><br>
+        <br>
+        <input type="submit" value="Enter">
+    </form>
+{% endblock %}

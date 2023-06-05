@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    RSA tool
+{% endblock %}
+
+{% block main %}
+    <h1>AES Tool</h1>
+
+    <h2>Encryption:</h2>
+
+    <form method="POST" action="/aes">
+        <p>
+            <label for="plain_text">Plain Text:</label>
+            <textarea id="plain_text" name="plain_text" rows="10" cols="80">    </textarea>
+        </p>
+        <p>
+            <label for="cipher_mode">Cipher Mode:</label>
+            <select id="cipher_mode" name="cipher_mode">
+                <option value="cbc" {% if cipher_mode == 'cbc' %}selected{% endif %}>CBC</option>
+                <option value="ecb" {% if cipher_mode == 'ecb' %}selected{% endif %}>ECB</option>
+            </select>
+        </p>
+        <p>
+            <label for="key_size">Key Size:</label>
+            <select id="key_size" name="key_size">
+                <option value="128" {% if key_size == '128' %}selected{% endif %}>128 bits</option>
+                <option value="192" {% if key_size == '192' %}selected{% endif %}>192 bits</option>
+                <option value="256" {% if key_size == '256' %}selected{% endif %}>256 bits</option>
+            </select>
+        </p>
+        <p>
+            <label for="secret_key">Secret Key:</label>
+            <input type="text" id="secret_key" name="secret_key" value="{{ secret_key }}">
+        </p>
+        <input type="hidden" name="action" value="encrypt">
+        <button type="submit">Encrypt</button>
+    </form>
+
+    {% if encrypted_text %}
+    <p>
+        <label for="encrypted_text">Encrypted Text:</label>
+        <textarea id="encrypted_text" name="encrypted_text" rows="10" cols="80">{{ encrypted_text }}</textarea>
+    </p>
+    {% endif %}
+
+    <h2>Decryption:</h2>
+
+    <form method="POST" action="/aes">
+        <p>
+            <label for="encrypted_text">Encrypted Text:</label>
+            <textarea id="encrypted_text" name="encrypted_text" rows="10" cols="80">{{ encrypted_text }}</textarea>
+        </p>
+        <p>
+            <label for="cipher_mode">Cipher Mode:</label>
+            <select id="cipher_mode" name="cipher_mode">
+                <option value="cbc" {% if cipher_mode == 'cbc' %}selected{% endif %}>CBC</option>
+                <option value="ecb" {% if cipher_mode == 'ecb' %}selected{% endif %}>ECB</option>
+            </select>
+        </p>
+        <p>
+            <label for="key_size">Key Size:</label>
+            <select id="key_size" name="key_size">
+                <option value="128" {% if key_size == '128' %}selected{% endif %}>128 bits</option>
+                <option value="192" {% if key_size == '192' %}selected{% endif %}>192 bits</option>
+                <option value="256" {% if key_size == '256' %}selected{% endif %}>256 bits</option>
+            </select>
+        </p>
+        <p>
+            <label for="secret_key">Secret Key:</label>
+            <input type="text" id="secret_key" name="secret_key" value="{{ secret_key }}">
+        </p>
+        <input type="hidden" name="action" value="decrypt">
+        <button type="submit">Decrypt</button>
+    </form>
+
+    {% if decrypted_text %}
+    <p>
+        <label for="decrypted_text">Decrypted Text:</label>
+        <textarea id="decrypted_text" name="decrypted_text" rows="10" cols="80">{{ decrypted_text }}</textarea>
+    </p>
+    <button onclick="decode()">Decode to Plain Text</button>
+    {% endif %}
+
+    <script>
+        function decode() {
+            var encoded = document.getElementById("decrypted_text").value;
+            var decoded = atob(encoded);
+            document.getElementById("decrypted_text").value = decoded;
+        }
+    </script>
+{% endblock %}

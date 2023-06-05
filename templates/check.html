@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Credit Card Validator
+{% endblock %}
+
+{% block main %}
+    <h1>Credit Card Validator</h1>
+    <form method="POST">
+        <label for="card_number">Enter your credit card number:</label>
+        <input id="card_number" name="card_number" type="text" maxlength="16">
+        <button type="submit">Check Card Number</button>
+    </form>
+{% endblock %}

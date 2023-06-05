@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    RSA Tool
+{% endblock %}
+
+{% block main %}
+    <h1>RSA Tool</h1>
+
+    <form method="POST" action="/rsa">
+        <p>
+            <label for="key_size">Key Size:</label>
+            <select id="key_size" name="key_size">
+                <option value="512" {% if key_size == 512 %}selected{% endif %}>512 bits</option>
+                <option value="1024" {% if key_size == 1024 %}selected{% endif %}>1024 bits</option>
+                <option value="2048" {% if key_size == 2048 %}selected{% endif %}>2048 bits</option>
+                <option value="4096" {% if key_size == 4096 %}selected{% endif %}>4096 bits</option>
+            </select>
+            <input type="hidden" name="action" value="rsakeygen">
+            <button type="submit">Generate Key Pair</button>
+        </p>
+    </form>
+
+    {% if pub_key %}
+        <h2>Public Key:</h2>
+        <textarea rows="10" cols="80">{{ pub_key }}</textarea>
+
+        <h2>Private Key:</h2>
+        <textarea rows="10" cols="80">{{ priv_key }}</textarea>
+    {% endif %}
+    <br>
+    <br>
+    <h2>Encryption:</h2>
+
+    <form method="POST" action="/rsa">
+        <p>
+            <label for="plain_text">Plain Text:</label>
+            <textarea id="plain_text" name="plain_text" rows="10" cols="80">{{ plain_text }}</textarea>
+        </p>
+        <p>
+            <label for="pub_key">Public Key:</label>
+            <textarea id="pub_key" name="pub_key" rows="10" cols="80">{{ pub_key }}</textarea>
+        </p>
+        <input type="hidden" name="action" value="encrypt">
+        <button type="submit">Encrypt</button>
+    </form>
+
+    {% if encrypted_text %}
+        <h3>Encrypted Text:</h3>
+        <textarea rows="10" cols="80">{{ encrypted_text }}</textarea>
+    {% endif %}
+    <br>
+    <br>
+    <h2>Decryption:</h2>
+
+    <form method="POST" action="/rsa">
+        <p>
+            <label for="encrypted_text">Encrypted Text:</label>
+            <textarea id="encrypted_text" name="encrypted_text" rows="10" cols="80">{{ encrypted_text }}</textarea>
+        </p>
+        <p>
+            <label for="priv_key">Private Key:</label>
+            <textarea id="priv_key" name="priv_key" rows="10" cols="80">{{ priv_key }}</textarea>
+        </p>
+        <input type="hidden" name="action" value="decrypt">
+        <button type="submit">Decrypt</button>
+    </form>
+
+    {% if decrypted_text %}
+        <h3>Decrypted Text:</h3>
+        <textarea rows="10" cols="80">{{ decrypted_text }}</textarea>
+    {% endif %}
+{% endblock %}
